@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dataslime | Detailed Resume</title>
+    <style>
+        :root {
+            /* 完全沿用主頁的濃郁奶茶咖啡配色 */
+            --bg-color: #d7c9b4;     /* 整個大背景：深奶茶色 */
+            --header-bg: #4e342e;    /* 標頭：濃縮咖啡色 */
+            --header-text: #ffffff;  /* 標頭文字：純白 */
+            --container-bg: #fdfaf5; /* 履歷底色：燕麥奶油色 */
+            --text-main: #3e2723;   /* 主文字：深烘焙咖啡色 */
+            --text-muted: #8d6e63;  /* 次要文字/時間：拿鐵棕 */
+            --accent: #bcaaa4;      /* 分隔線/小圖示：可可色 */
+        }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        /* 履歷主容器 - 參考圖6的排版結構 */
+        .resume-container {
+            width: 90%;
+            max-width: 900px; /* 履歷頁面可以寬一點，方便閱讀 */
+            background: var(--container-bg);
+            margin: 50px auto;
+            border-radius: 35px;
+            box-shadow: 0 25px 50px rgba(62, 39, 35, 0.2);
+            overflow: hidden;
+            display: flex; /* 實作左右分欄 */
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* ==============================
+           左側邊欄 - 沿用草圖5的「使用語言」排版
+           ============================== */
+        .sidebar {
+            width: 35%; /* 左側寬度 */
+            background-color: #f0e6d8; /* 比燕麥奶油色稍深的奶茶色，做出層次 */
+            padding: 50px 30px;
+            color: var(--text-main);
+            border-right: 1px solid #e0d5c1;
+        }
+
+        .section-title-left {
+            font-size: 1.2rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--header-bg);
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 10px;
+        }
+
+        .skill-list, .contact-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .skill-list li, .contact-list li {
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+        }
+
+        /* 簡單的 contact style */
+        .contact-list li strong {
+            width: 70px;
+            color: var(--header-bg);
+        }
+
+        /* ==============================
+           右側主內容 - 沿用草圖5的 Work/Education/Project
+           ============================== */
+        .main-content {
+            width: 65%; /* 右側寬度 */
+            padding: 50px 40px;
+        }
+
+        .main-header {
+            margin-bottom: 40px;
+            border-bottom: 2px solid #e0d5c1;
+            padding-bottom: 20px;
+        }
+
+        .main-header h1 {
+            margin: 0;
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--header-bg);
+            letter-spacing: 1px;
+        }
+
+        .main-header p {
+            margin: 5px 0 0;
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .section-title-right {
+            font-size: 1.3rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--header-bg);
+            margin-top: 30px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        /* 裝飾用小方塊，增加現代感 */
+        .section-title-right::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 20px;
+            background-color: var(--accent);
+            margin-right: 10px;
+            border-radius: 2px;
+        }
+
+        /* 履歷項目排版 (參考圖6的簡潔感) */
+        .entry {
+            margin-bottom: 25px;
+        }
+
+        .entry-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 5px;
+        }
+
+        .entry-title {
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: var(--text-main);
+            margin: 0;
+        }
+
+        .entry-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin: 2px 0 0;
+        }
+
+        .entry-date {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            white-space: nowrap; /* 避免時間斷行 */
+            margin-left: 20px;
+        }
+
+        .entry-content {
+            font-size: 0.9rem;
+            color: var(--text-main);
+            margin: 10px 0 0;
+            padding-left: 15px;
+            border-left: 1px solid #e0d5c1;
+            line-height: 1.6;
+        }
+
+        /* 返回按鈕 - 現代感設計 */
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: var(--header-bg);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 700;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .back-btn:hover {
+            transform: translateX(-5px);
+            background-color: #3e2723;
+        }
+
+        /* 手機版適應 (垂直排列) */
+        @media (max-width: 768px) {
+            .resume-container {
+                flex-direction: column;
+                margin: 20px auto;
+            }
+            .sidebar, .main-content {
+                width: 100%;
+                box-sizing: border-box;
+            }
+            .sidebar {
+                border-right: none;
+                border-bottom: 1px solid #e0d5c1;
+                padding: 30px;
+            }
+            .main-content {
+                padding: 30px;
+            }
+            .main-header h1 { font-size: 1.8rem; }
+            .entry-header { flex-direction: column; }
+            .entry-date { margin-left: 0; margin-top: 5px; }
+        }
+    </style>
+</head>
+<body>
+
+<a href="index.html" class="back-btn">&larr; Back to Dashboard</a>
+
+<div class="resume-container">
+    
+    <div class="sidebar">
+        <div class="section-title-left">Contact</div>
+        <ul class="contact-list">
+            <li><strong>Phone:</strong> +886 9xx xxx xxx</li>
+            <li><strong>Email:</strong> dataslime@email.com</li>
+            <li><strong>Git:</strong> github.com/dataslime</li>
+        </ul>
+
+        <br><br>
+
+        <div class="section-title-left">Languages</div>
+        <ul class="skill-list">
+            <li>Kotlin (Android)</li>
+            <li>Swift (iOS)</li>
+            <li>Flutter</li>
+            <li>Python</li>
+            <li>C++ / C</li>
+            <li>SQL</li>
+        </ul>
+        
+        <br><br>
+
+        <div class="section-title-left">Expertise</div>
+        <ul class="skill-list">
+            <li>Cybersecurity Note</li>
+            <li>Packet Analysis</li>
+            <li>Linux Admin</li>
+            <li>Docker</li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <div class="main-header">
+            <h1>DATASLIME</h1>
+            <p>資訊工程系 | Mobile App & Cybersecurity Enthusiast</p>
+        </div>
+
+        <div class="section-title-right">工作經驗</div>
+        
+        <div class="entry">
+            <div class="entry-header">
+                <div>
+                    <h3 class="entry-title">Junior Developer</h3>
+                    <p class="entry-subtitle">Tech Company Name</p>
+                </div>
+                <span class="entry-date">2026 - Present</span>
+            </div>
+            <p class="entry-content">
+                負責 Android App 新功能開發與維護，使用 Kotlin 語言。優化 API 回傳資料處理流程，提升 App 啟動速度 15%。
+            </p>
+        </div>
+
+        <div class="entry">
+            <div class="entry-header">
+                <div>
+                    <h3 class="entry-title">機械化步兵 (服役)</h3>
+                    <p class="entry-subtitle">中華民國陸軍</p>
+                </div>
+                <span class="entry-date">20xx - 20xx</span>
+            </div>
+            <p class="entry-content">
+                四年軍旅生涯，培養了極高的紀律性、抗壓性與團隊協作能力，能適應高強度工作環境。
+            </p>
+        </div>
+
+        <div class="section-title-right">學校經驗</div>
+        
+        <div class="entry">
+            <div class="entry-header">
+                <div>
+                    <h3 class="entry-title">資訊工程學系</h3>
+                    <p class="entry-subtitle">私立大學</p>
+                </div>
+                <span class="entry-date">預計 2027 畢業</span>
+            </div>
+            <p class="entry-content">
+                專注於行動裝置開發與資訊安全課程。曾獲得校內專案競賽佳作。
+            </p>
+        </div>
+
+        <div class="section-title-right">專題經驗</div>
+        
+        <div class="entry">
+            <div class="entry-header">
+                <div>
+                    <h3 class="entry-title">美食推薦行動應用程式</h3>
+                    <p class="entry-subtitle">畢業專題</p>
+                </div>
+                <span class="entry-date">2025</span>
+            </div>
+            <p class="entry-content">
+                使用 Kotlin 與 Flutter 開發雙平台 App，整合Socket.io實作即時店家資訊快取。
+            </p>
+        </div>
+
+        <div class="entry">
+            <div class="entry-header">
+                <div>
+                    <h3 class="entry-title">C++ 加密工具研究</h3>
+                    <p class="entry-subtitle">個人資安專案</p>
+                </div>
+                <span class="entry-date">2024</span>
+            </div>
+            <p class="entry-content">
+                實作 XOR 與自定義位元運算，模擬資安攻防中的加密流程。
+            </p>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
