@@ -58,17 +58,22 @@
             padding-bottom: 8px;
         }
 
-        .skill-list, .contact-list {
+        .contact-list, .skill-list {
             list-style: none;
             padding: 0;
             margin: 0;
         }
 
-        .skill-list li, .contact-list li {
+        .contact-list li, .skill-list li {
             font-size: 0.9rem;
             margin-bottom: 12px;
             font-weight: 500;
             word-break: break-all;
+        }
+
+        /* [關鍵修改點 1]: 增加 EMAIL 和 GITHUB 之間的上下距離 */
+        .contact-list li.github-section {
+            margin-top: 30px; /* 原本可能是 0 或很小，改成 30px 來推開距離 */
         }
 
         .contact-list li strong {
@@ -76,6 +81,7 @@
             color: var(--header-bg);
             font-size: 0.8rem;
             text-transform: uppercase;
+            margin-bottom: 5px; /* 標題跟網址也要開一點 */
         }
 
         /* 右側主內容 */
@@ -105,16 +111,22 @@
             font-weight: 600;
         }
 
+        /* [關鍵修改點 2]: 大幅增加大標題與上一個主題內容之間的垂直留白 */
         .section-title-right {
             font-size: 1.2rem;
             font-weight: 800;
             color: var(--header-bg);
-            margin-top: 30px;
+            margin-top: 55px; /* 原本可能是 30px，增加到 55px 來推開與上一區塊內容的距離 */
             margin-bottom: 15px;
             display: flex;
             align-items: center;
         }
         
+        /* 專門調整第一個標題，不讓它推太下面 */
+        .section-title-right:first-of-type {
+            margin-top: 10px;
+        }
+
         .section-title-right::before {
             content: '';
             display: inline-block;
@@ -176,8 +188,8 @@
     <div class="sidebar">
         <div class="section-title-left">Contact</div>
         <ul class="contact-list">
-            <li><strong>Email</strong>mech_inf_cm33@icloud.com</li>
-            <li><strong>GitHub</strong><a href="index.html" style="color: inherit; text-decoration: none;">github.com/dataslime</a></li>
+            <li class="email-section"><strong>Email</strong>mech_inf_cm33@icloud.com</li>
+            <li class="github-section"><strong>GitHub</strong><a href="index.html" style="color: inherit; text-decoration: none;">github.com/dataslime</a></li>
         </ul>
 
         <br>
@@ -227,7 +239,6 @@
                 <div>
                     <h3 class="entry-title">美食推薦行動應用程式</h3>
                 </div>
-                <span class="entry-date">2025</span>
             </div>
             <p class="entry-content">
                 使用 Kotlin 開發 App，整合後端實作，提供使用者一個「簡單」、「快速」、「方便」的 UI 服務。
